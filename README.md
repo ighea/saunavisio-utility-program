@@ -9,7 +9,7 @@ SaunaVisio utility program was first created as simply download script to acquir
 The main features were:
 * Download manager (queue, continue download)
 * Fast search for movies and TV-shows
-* Filters for setting upcoming TV content to be recorded
+* Filters for setting upcoming TV content to be recorded automatically
 
 Saunalahti was later acquired by Elisa and SaunaVisio replaced with Elisa Viihde.
 
@@ -17,6 +17,6 @@ SaunaVisio utility program was available for both Linux and Windows operating sy
 
 ## Screenshots of the GUI
 
-![Main screen GTK](https://raw.githubusercontent.com/ighea/saunavisio-utility-program/master/screenshots/gui.png)
+![Main screen GTK](https://raw.githubusercontent.com/ighea/saunavisio-utility-program/master/screenshots/gui.jpg)
 
-![Main screen Windows XP](https://raw.githubusercontent.com/ighea/saunavisio-utility-program/master/screenshots/gui-win.png)
+![Main screen Windows XP](https://raw.githubusercontent.com/ighea/saunavisio-utility-program/master/screenshots/gui-win.jpg)
