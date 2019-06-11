@@ -1,0 +1,119 @@
+
+
+		SaunaVisio-aputyökalu GUI -ohjetiedosto
+	
+
+	Rakennellut Mika 'ighea' Hynnä <mika.hynna@wippies.com>
+	
+	Kotisivu: http://kapsi.fi/ighea/saunavisio/
+	
+
+	Sovellus GUI.py on lisensoitu GNU General Public License v3:n alaisena.
+	
+	Lisenssi löytyy täältä: http://www.gnu.org/licenses/gpl.txt
+	Epävirallinen suomennus lisenssistä: http://www.turre.com/licenses/gpl_fi.html
+	
+	
+Olennaiset tiedostot:
+	saunavisio.sh		-	Käynnistää unixeissa ja linuxeissa saunavision graafisen käyttöliittymän, tai ainakin yrittää
+	saunavisio.bat		-	sama kuin yllä, mutta windowssille...
+	GUI.py			-	Graafinen käyttöliittymä
+	saunavisio.py		-	Sisältää (osittain) rajapinnan SaunaVisio:n web-käyttöliittymään
+	TODO			-	Lista suunnitelluista muutoksista ja ominaisuuksista
+	LUEMINUT-GUI.txt	-	Tämä tiedosto
+	LUEMINUT.txt		-	Ohje-tiedosto saunavisio.py:lle
+
+Käyttöönotto:
+	Windows:
+		Ohjeet:
+		
+		 PyGTK:n asentamiseksi: http://faq.pygtk.org/index.py?req=show&file=faq21.001.htp
+		tai lataa ja asenna suoraanseuraavat paketit:
+		 Python: http://www.python.org/ftp/python/2.5.2/python-2.5.2.msi
+			64-bittiselle Windowssille: http://www.python.org/ftp/python/2.5.2/python-2.5.2.amd64.msi
+		 GTK+ runtime -kirjastot: http://downloads.sourceforge.net/gladewin32/gtk-2.12.9-win32-2.exe
+		 PyCairo: http://ftp.gnome.org/pub/GNOME/binaries/win32/pycairo/1.4/pycairo-1.4.12-1.win32-py2.5.exe
+		 PyObject: http://ftp.gnome.org/pub/GNOME/binaries/win32/pygobject/2.14/pygobject-2.14.1-1.win32-py2.5.exe
+		 PyGTK: http://ftp.gnome.org/pub/GNOME/binaries/win32/pygtk/2.12/pygtk-2.12.1-2.win32-py2.5.exe
+		Asennettuasi kaikki kirjastot onnistuneesti ohjelman pitäisi lähteä käyntiin tuplaklikkaamalla saunalahti.bat:ia
+		
+	Linux:
+		Suurimmassa osassa jakeluita pitäisi toimia suoraan (esim. Ubuntu), jos ei: asenna Python, PyCairo, PyGobject ja PyGTK
+
+
+
+Suositeltava videosoitin on VLC, löydät sen windowssille osoitteesta: http://www.videolan.org/vlc/
+
+
+Toiminnot:
+ - Suurin osa ohjelman toiminnoista on dokumentoitu sovellukseen ja selviää pitämällä kursoria hetki ihmeellisen palikan päällä, kuten Haku-kenttä.
+ 
+ 	Haku-kenttä:
+ 		- Kaikki saunavisio.py:stä tutut haku-filtterit (^,[] ja @) ovat tuettuina.
+ 		- Enter-painikkeen painaminen suorittaa haun.
+ 
+ 	Hakusanat-lista:
+ 		- Hakusanojen muokkaus tapahtuu klikkaamalla uudelleen valittua riviä ja tallentamalla muutoksensa painamalla Entteriä
+ 		- Oikean hiiren painikkeen alta löytyy popup-valikko, joka mahdollistaa hakusanojen poistamisen
+ 		- Hakusanan tuplaklikkaus suorittaa kyseiselle hakusanalle haun
+ 		- Enter-painikkeen painaminen hakusanan lisäyskentässä suorittaa hakusanan lisäämisen
+ 		
+ 	Ohjelma-lista:
+ 		- Pitämällä hiiren kursoria hetki ohjelmatietojen päällä, hyppää popup-ikkuna silmille,
+ 		  tallennetuilla ohjelmilla esikatselukuvan kera
+ 		- Normaali-tilassa olevan ohjelman tuplaklikkaus asettaa ohjelman tallennettavaksi
+ 		- Tallennettavaksi merkityn ohjelman tuplaklikkaus peruuttaa tallennuksen
+ 		- Tallennetn ohjelman tuplaklikkaus aloittaa tallenteen toistamisen videosoittimella
+ 		- Oikean hiiren painikkeen alta löytyy popup-valikko, jossa mm. tallenteiden lataus
+ 		
+ 	Ohjelmien latausikkuna (TALLENTEIDEN LATAAMINEN):
+ 		- Aukeaa ohjelmalistauksessa oikean hiirenpainikkeen alta, kun tallentuneita Tv-ohjelmia on valittuna
+ 		- Tallenteet ladataan järjestyksessä ylin ensin, järjestystä on mahdollista muuttaa raahaamalla ohjelmia listassa.
+ 		- Tallenteiden lataamisen alettua voit keskeyttää lataukset muuttaaksesi latausjärjestystä ja jatkaa latauksia painamalla
+ 		  uudelleen "Aloita"-painiketta.
+ 		- Lataus-ikkunoita voi olla kerrallaan auki niin paljon kuin kaista ja kone sietää.
+ 		- Tallenteen latauksen tilaa ilmaistaan väreillä: Vihreä=valmistunut, punainen=keskeytetty ja oranssi=lataus käynnissä
+ 		
+	
+	Pikanäppäimet:
+		Ctrl + L	-	Siirtää kursorin Haku-kenttään
+		Ctrl + K	-	Siirtää kursorin hakusanan lisäyskenttään
+	
+	
+
+Tunnetut ongelmat:
+	Sovellus ei sisällä tällä hetkellä ainuttakaan tunnettua ongelmaa, ainoastaan vähemmän tunnettuja ja hyödynnettyjä ominaisuuksia.
+	Ominaisuuksien kehitysehdotuksia otetaan vastaan, lue toki ensin TODO-tiedosto.	
+
+
+Muutokset:
+- 0.22 (11.08.2008)
+ * Korjattu "heikolla yhteydellä" tapahtuvien virheilmoitusten seurauksena ohjelman jumittuminen lataus-dialogissa
+ * Lisäilty tarkistuksia hakujen listauksiin
+
+- 0.21 (08.08.2008)
+ * "Näytä tallenteet levyllä"-asetuksen ollessa päällä valmistuneiden tallenteiden, jotka ovat ladattuina koti koneelle, katselun/toiston aloittaminen toistaa tiedostot suoraan kotikoneelta.
+ * Korjattu hakusanojen muokkaus
+ * Lisätty uusi ja mahtava pikanäppäinyhdistelmä
+ * Lisätty törkeä kuvake
+
+- 0.2 (06.08.2008)
+ * Tallenteiden latauksen jatkaminen
+ * Tulevia ohjelmia listattaessa voi nyt valita näytettävien ohjelmien "tilat"
+ * Tallenteiden latausikkunnan otsikko alkaa sanalla "Valmis", kun lataukset on saatu päätökseen.
+ * PopUp-kuvaukseen lisätty ohjelman kanava
+ * Asetuksiin lisätty valinta "Muista hakujen näkyvyysasetukset": jolla ohjelma muistaa viimeksi käytetyt ohjelmien listauksen näkyvyysasetukset käyttökertojen välillä
+ * Asetuksiin lisätty valinta "Näytä tallenteet levyllä": ohjelma erottelee tallennetut ohjelmat, jotka löytyvät myös levyltä (kokonaan tai osittain) ladattuina eri värillä
+ * Asetuksiin lisätty valinta "Nouda ohjelmatiedot automaattisesti": ohjelma noutaa automaattisesti haun päätyttyä listauksen ohjelmille kestot ja kuvaukset yksitellen järjestyksessä
+ * Korjattu tallenteiden tuhoaminen
+ * Hakusana-lista on aina aakkosjärjestyksessä
+ 
+
+- 0.11 (03.08.2008)
+ * Windows-kohtaisia korjauksia
+ * Ei tallennella tyhjiä esikatselukuvia
+
+- 0.1 (03.08.2008)
+ * Ensimmäinen ja erinomainen versio graafisesta käyttöliittymästä
+
+

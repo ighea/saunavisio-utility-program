@@ -1,0 +1,12 @@
+GUI:
+-Ota käyttöön / poista käytöstä popup-menun kohtia ohjelma-valintojen mukaan
+-Muista ikkunan koko
+-PAREMPI tuloslistan sorttuas
+-Lisää "Listaa"-painikkeelle valmistumisprosentti, kirjoita mahdollisesti kaikki haut uuteen uskoon
+-Mahdollisuus asettaa SaunaVision web-käyttöliittymän pääsivulla näkyvät kanavat
+-Kaikkien säikeiden alasajo nätisti ohjelman päättyessä
+
+SAUNAVISIO.py:
+-tallenteiden sijoittelu hakemistoihin serveripäässä APIna(na)? - Toteutettu Saunalahden toimesta
+-UPNP-gateway http://resnet.uoregon.edu/~gurney_j/jmpc/pymeds.html
+-Yhdistä hakusana-systeemi SaunaVision oman "tallenna aina"-järjestelmän kanssa

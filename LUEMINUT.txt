@@ -1,0 +1,187 @@
+
+		SaunaVisio aputyökalu -ohjetiedosto
+
+		Purkannut Mika Hynnä <mika.hynna@wippies.com>
+		
+		Sovelluksen kotisivu: http://kapsi.fi/ighea/saunavisio/
+
+
+Sovellus saunavisio.py on lisensoitu WTFPL:n alaisena, lisätietoja osoitteesta http://sam.zoy.org/wtfpl/COPYING
+
+Ottamalla SaunaVisio aputyökalun (edellä saunavisio.py) käyttöön hyväksyt lisenssin ja seuraavan ehdon: Sovelluksen tekijä ei ota vastuuta yhtään mistään, käyttö tai edes sovelluksesta ajattelu täysin omalla vastuulla.
+
+
+Sovelluksen käyttö ja tarkoitus:
+
+SaunaVision tallenteiden asettaminen ennalta määriteltyjen hakusanojen perusteella.
+Suositeltava sovelluksen suoritustiheys kerran tai kaksi viikossa turhan liikenteen ja liian tiheiden sivupyyntöjen välttämiseksi.
+Sovelluksen tostuvaan ajoitettuun suorittamiseen on suositellaan käytettävän "tallenna" parametrin sijaan parametriä "crontallenna",
+joka odottelee sivupyyntöjen välissä yhdestä kuuteenkymmeneen (1-60) sekuntia.
+
+
+Puolittainen ominaisuuslista:
+- Tallennnuspyyntöjen asettaminen hakusanojen perusteella
+- Hakusanojen lisäys ja poisto
+- Tallenteiden suoratoisto käyttäen vapaavalintaista videosoitinta (suositellaan VLC:tä)
+- Tallenteiden lataus käyttäen wget:iä
+- Ohjelmien haku merkkijonojen perusteella
+- Yksittäisten tallennuspyyntöjen asettaminen ja peruminen
+- TV-ohjelman tietojen tarkastelu (Nimi, ajankohta, kesto, kuvaus) hyödyntäen ohjelmatunnusta ID
+- Ilmoitus saatavilla olevista päivityksistä ja päivittäminen yhdellä komennolla
+- NettiVision kanavien suorakatselu
+
+
+Suositukset:
+- python>=2.5.x
+- wget, tallenteiden lataamiseksi
+- VLC, tallenteiden sujuvaan suoratoistoon
+- UTF-8
+
+
+Vinkkejä:
+
+- Suoritettaessa hakuja merkkijonoilla, jotka sisältävät välilyöntejä tai muita erikoismerkkejä, on lainausmerkkien käyttö suositeltavaa.
+- Komentoriviparametreissä voi ongelmia ilmetessä korvata ä:n ja ö:n a:lla ja o:lla.
+
+
+Sovelluksen asetustiedostot löytyvät hakemistosta ~/.saunavisio/ tai C:\Documents and Settings\käyttäjätunnus\Saunavisio käyttöjärjestelmästä riippuen.
+Ensimmäisellä käyttökerralla ehdotetaan asetustiedostojen luontia, jos niitä ei ole vielä graafisen käyttöliittymän hyödyntämisen johdosta luotu.
+
+Lisätietoa sovelluksen käytöstä saat suorittamalla sovelluksen ilman lisäparametrejä.
+
+
+CRON-esimerkki (ei testattu):
+
+/etc/cron.weekly/saunavisio
+
+#!/bin/sh
+LOGHAK=/home/user/
+UNIXUSER=user
+SAUNAVISIO=/path/to/saunavisio.py
+su - $UNIXUSER -c "echo $(date) >> $LOGHAK/saunavisio_run.log;$SAUNAVISIO crontallenna >> $LOGHAK/saunavisio_run.log"
+
+Muistathan laittaa scriptalle execute-bitit päälle eli suorittaa "chmod +x /etc/cron.daily/saunavisio", jotta scripta tulee myös suoritettua!
+
+
+Tunnetut (lisä)ominaisuudet:
+- Purkka on kirjattu UTF-8:lla, eläkää sen kanssa, tai älkää. Valinta on teidän. ;)
+- FAT32 ja kumppanit voivat käyttää tiedostonimissään vain rajattua määrää merkkejä, joten esim. "lataa"-komennon wget:lle
+  puskemissa merkkijonoissa saattaa ilmetä hirveitä ja kavalia epäyhteensopivuuksia, kuten kaksoispiste. (Tuoreimmissa versioissa ongelmaa on pyritty korjaamaan)
+- Lainausmerkit komentoriviparametreissä ovat, edelleen, kova sana!
+
+
+Hakusanojen tarkentaminen:
+- Asettamalla ^-merkin hakusanan loppuun, alkuun tai loppuun ja alkuun voit rajata hakusanan täsmäävyyttä
+  Esimerkkejä:
+	Hakusana "uutiset^" vastaa ohjelmia "TV-uutiset" ja "Nelosen uutiset", mutta ei "Uutiset ja sää"
+	Hakusana "^Late" vastaa ohjelmaa "Late Night with...", mutta ei ohjelmaa "Voittopotti Late Night"
+	Hakusana "^Lost^" vastaa vain ja ainoastaan ohjelmaa "Lost"
+- Lisäämällä @-merkin ja TV-kanavan voit määrittää kanavan, jota haku koskee:
+  Esimerkki:
+	Hakusana "Monk@YLE TV1" vastaa vain ohjelmaa "Monk" kanavalla "YLE TV1", eikä esim. kanavan "YLE TV1" mahdollisia "Monk":ja.
+- Tallennuspyyntöjen asettamista voi edelleen tarkentaa asettamalla []-merkkien väliin alkavan tunnin (esim. [17]), jonka ajalta tahtoo tallenteita merkattavan tai mahdollisesti alkavien tuntien välin (esim. [13-18]) tallenteille. Katso käytännönesimerkki muutoksista.
+
+
+
+HUOM. Sovellukselle on saatavilla myös graafinen käyttöliittymä!
+
+Muutokset:
+-0.994 (11.08.2008)
+ * Korjattu tapaukset, joissa listattaessa uusimmat tallenteet ei kuvausta esiinny.
+
+-0.993 (08.08.2008)
+ * Lisätty muutama varmistus toimintoihin.
+
+-0.992 (06.08.2008)
+ * Korjattu tallennettujen ohjelmien noutamisesta nimen esiintyminen väärin
+ * Korjattu ohjelmatietojen noutamisessa kuvauksen sisältävän kirjautumistiedot (parse error)
+ * Parannettu tietojen noutamista asetustiedostosta
+
+-0.991 (04.08.2008)
+ * Windows-kohtaisia korjauksia
+ * Käytettäessä latauksille alihakemistoja, pilkotaan alihakemiston nimi kaksoispisteen kohdalta
+
+-0.99 (03.08.2008)
+ * Asetustiedostot siirretty omaan hakemistoonsa (~/.saunavisio/, windowssissa \\käyttäjän omattiedostot\\Saunavisio)
+ * Asetustiedoston käsittely kirjoitettu kokonaan uusiksi, vanhat tiedostot saattavat lakata toimimasta oikein...
+ * Muutettu lineaarisesta scriptasta luokaksi ==> "GUIfication"
+ * Mahdollisuus latauksissa alihakemistoille saunalahti.conf:n asetuksella downloadUseSubDirs=True, jolloin lataukset tallentuvat kohdehakemisto/Ohjelmannimi/Ohjelmalisukkeineen.ts
+ * Aika-filtteröinti korjattu toimimaan odotetulla tavalla
+ * Ohjelman tilat muutettu seuraavan laisiksi: Uusi ohjelma on "Ohjelm", ohjelma jolla on tallennuspyyntö on "Pyyntö" ja valmis tallennus on "Valmis"
+ * Korjailtu pikkuvikoja
+
+-0.981 (24.07.2008)
+ * Korjaus hakusanojen lataamiseen koskien edellistä päivitystä.
+
+-0.98 (24.07.2008)
+ * Mahdollisuus merkitä []-merkkien väliin alkava tunti tai tunnit, jolta/joilta tallennuksia haluaa tietyillä hakusanoilla
+   - "Sydämen asialla@YLE TV1[17]" asettaa tallennettavaksi kaikki "Sydämen asialla"-ohjelmat kanavalta "YLE TV1", jotka
+     alkavat kello 17:00-17:59 välisenä aikana.
+   - "Sydämen asialla@YLE TV1[13-21]" asettaa tallennettavaksi kaikki "Sydämen asialla"-ohjelmat kanavalta "YLE TV1", jotka
+     alkavat kello 13:00-21:59 välisenä aikana.
+   
+-0.97 (21.07.2008)
+ * Wanha bugi nitistetty, toivottavasti ei aiheuta uusia. Tuoreiden tallenteiden listauksessa pitäisi nyt näkyä kaikki ensimmäisen sivun ohjelmat.
+
+-0.96 (20.07.2008)
+ * Sivupyyntöjen käsittelly ja sisäänkirjautuminen kirjoitettu uudelleen, yrittää kolmesti kirjautua sisään.
+ * Muokattu vainoharhaisuus-moodia eli crontallenna-käskyä järkevämmäksi
+ * Pilkun (,) käyttäminen hakusanoissa tehty mahdolliseksi (SaunaVision haku ei sitä ymmärrä, mutta tarvitaan pieni kikkailu hakutulosten parsintaan :P)
+ * Uusi komentoriviparametri "uudet", listaa tuoreimmat valmistuneet tallennukset, lisäparametrilla "kuvaus" näyttää myös ohjelman kuvauksen.
+
+
+-0.95 (20.07.2008)
+ * Käytettäessä hakusanoissa filttereitä (^ ja @) haku ei ole enää ns. case sensitive: "Auto":lla löytyvät "auto" ja "aUTO"
+ * Korjattu useammalla sanalla tehtävät haut
+
+-0.94 (11.07.2008)
+ * Muutama turhauttava debug-viesti piilohon.
+
+-0.93 (10.07.2008)
+ * "tv":n kanssa voi nyt käyttää peräti yhtä merkkiä kanavan valintaan, esim. "tv 3" avaa MTV3:n toistettavaksi.
+ * Mahdollisuus määritellä hauissa,listauksissa ja tallennusten asettamisissa @-merkillä erotettuna kanava, jolta haluaa tallenteet
+   tallennettavan. Esim. "Monk@YLE TV1" hakusanana jättäisi Monkit YLE TV1+:lta tallentamatta. Case sensitive.
+ * Mahdollisuus tarkentaa hakusanoja asettamalla ^-merkki hakusanan alkuun tai loppuun, jolloin esim. "auto^" täsmää "paloauto", muttei   
+   taas "automaattiin" ja esim. "^House" täsmää pelkästään "House"-alkuisiin ohjelmannimiin.
+   HUOM. ^-merkin käyttö tekee hakusanasta ns. case sensitiven eli isoilla pienillä kirjaimilla on merkitystä, olkaa tarkkoina.
+         Myös @-merkin jälkeen tuleva kanavan nimi tulee olla täsmälleen samanmoinen kuin hakulistauksissa esiintyvä, script-kiddie on   
+         laiskalla päällä. :p
+        
+-0.92 (07.07.2008)
+ * Mahdollisuus katsella NettiVision kanavia käskemällä "tv Kanava", esim "tv Nelonen", vain Elisa ja Saunalahtilaisille.
+ * Mahdollisuus määritellä "listaa"-komennolla näytettävien ohjelmien tila kaikkien tulostamisen sijaan
+ * Korjauksen korjaava korjaus, korjaukseen
+
+-0.91 (04.07.2008, 5 minuuttia myöhemmin)
+ * Väärä muuttuja väärässä paikkaa: tyhjä tuloste, ei mitään vakavaa siis. Lisätään niitä uusia ominaisuuksia juu...
+
+- 0.9 (04.07.2008)
+ * Lisätty pienehkö tarkistus päivitysfunktioon
+ * Mahdollisuus asettaa asetustiedostoon muuttuja "downloaddirectory", jolla voi määritellä latausten kohdehakemiston
+
+- 0.8 (03.07.2008)
+ * Mahdollisuus asettaa "tallenna"-parametrilla halutessaan useampia ID:tä erotettuna välilyönnein, 
+   jos ID:tä vastaavaa ohjelmaa ei löydy suoritus lopetetaan
+ * Mahdollisuus asettaa "peruuta"-parametrille useampi ID, erotettuina välilyönnein
+
+
+- 0.7 (02.07.2008)
+ * Mahdollisuus käyttää komentoriviparametreissa ä- ja ö-kirjainten sijaan a:ta ja o:ta.
+ * Mahdollisuus määritellä haussa haettavien ohjelmien tila (Uusi ohjelma, tallennuspyyntö asetettu ja/tai tallennettu).
+ * Lisää entistäkin rumempia merkistökorjauksia
+ * Ulkonäköä/Tulosteita hieman siistitty
+
+- 0.6 (02.07.2008)
+ * Korjattu "lataa" ja "toista" komentoriviparametrit
+ * Rukoillaan automaattisen päivityksestä ilmoitustoiminnon toimivan,automaattisesta päivittämisestä puhumattakaan
+
+- 0.5 (02.07.2008)
+ * Ensimmäinen julkisempi versio: kaikkien iloksi, suruksi, murheeksi ja päänvaivaksi
+ * Automaattinen päivitysten tarkistus ja päivitystoiminto
+ * Uusi asetustiedostomuuttuja doupdatecheck="True/False"
+   Kytkee automaattisen päivityksien tarkistuksen päälle/pois.
+ * Uusi komentoriviparametri "crontallenna", suunnattu vainoharhaisille
+   Suorittaa samat toiminnot kuin "tallenna", mutta odottelee sivukutsujen välissä satunnais ajan 1 - 60 sekuntia.
+ * Uusi komentoriviparametri "tallenna [ID]" asetaa ohjelman ohjelmatunnuksella [ID] tallennettavaksi
+ * Uusi komentoriviparametri "peruuta [ID]" peruu ohjelmatunnuksen [ID] tallennuspyynnön
+ 
